@@ -15,19 +15,21 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function transform(arr) {
   if (!Array.isArray(arr)) {
-    return "'arr' parameter must be an instance of the Array!";
+    throw new Error("'arr' parameter must be an instance of the Array!")
   }
+
+  let result = [];
 
   if (arr.length === 0) {
-    return [];
+    return result;
   }
 
-  let result = arr.slice();
+  let array = arr.slice();
   for (let i = 0; i < result.length; i++) {
     if (result[i] === '--discard-next' && i === (result.length - 1) || result[i] === '--double-next' && i === (result.length - 1)) {
       return result.slice(0, result.length - 1);
     } else if (result[i] === '--discard-prev' && i === 0 || result[i] === '--double-prev' && i === 0) {
-        return result.slice(1, result.length);
+        break;
     } else if (result[i] === '--discard-next') {
         resultHalf = result.slice(0, i);
         let j = i + 2;
